@@ -6,6 +6,19 @@ import Header from './components/Header';
 import ErrorMessage from './components/ErrorMessage';
 import TodoList from './components/TodoList';
 
+enum ErrorMessages {
+  UnableToLoad = 'Unable to load todos',
+  EmptyTitle = 'Title should not be empty',
+  UnadleToAdd = 'Unable to add a todo',
+  UnableToDelete = 'Unable to delete a todo'
+}
+
+export enum Filters {
+  All = 'all',
+  Active = 'active',
+  Completed = 'completed',
+}
+
 export const App: React.FC = () => {
   const [title, setTitle] = useState('');
   const [disabledTitle, setDisabledTitle] = useState(false);
@@ -40,6 +53,7 @@ export const App: React.FC = () => {
   useEffect(() => {
     getVisibleTodos();
   }, [selectedFilter]);
+
   const handleError = (error: string) => {
     setErrorMessage(error);
 
@@ -51,7 +65,7 @@ export const App: React.FC = () => {
   const fetchTodos = () => {
     getTodos()
       .then((res: Todo[]) => setTodos(res))
-      .catch(() => handleError('Unable to load todos'));
+      .catch(() => handleError(ErrorMessages.UnableToLoad));
   };
 
   useEffect(() => fetchTodos(), []);
@@ -71,7 +85,7 @@ export const App: React.FC = () => {
 
     if (!title) {
       setTitle(prevTitle => prevTitle.trim());
-      handleError('Title should not be empty');
+      handleError(ErrorMessages.EmptyTitle);
       setTimeout(() => inputRef.current?.focus(), 0);
 
       setDisabledTitle(false);
@@ -86,12 +100,12 @@ export const App: React.FC = () => {
       userId: USER_ID,
     });
 
-    addTodo({ title, completed: false })
+    addTodo({ title, completed: false, userId: USER_ID })
       .then(data => {
         setTodos(prevTodos => [...prevTodos, { ...data }]);
         setTitle('');
       })
-      .catch(() => handleError('Unable to add a todo'))
+      .catch(() => handleError(ErrorMessages.UnadleToAdd))
       .finally(() => {
         setDisabledTitle(false);
         setTempTodo(null);
@@ -102,11 +116,13 @@ export const App: React.FC = () => {
   const handleDeleteTodo = (todoId: number) => {
     setProcessings((prevProcessings: number[]) => [...prevProcessings, todoId]);
 
+    console.log(todoId, 'deletedId')
+
     deleteTodo(todoId)
       .then(() => {
         fetchTodos();
       })
-      .catch(() => handleError('Unable to delete a todo'));
+      .catch(() => handleError(ErrorMessages.UnableToDelete));
   };
 
   const clearCompletedTodos = () => {

@@ -9,11 +9,8 @@ export const getTodos = () => {
   return client.get<Todo[]>(`/todos?userId=${USER_ID}`);
 };
 
-export const addTodo = (data: any) => {
-  return client.post<any>(`/todos?userId=${USER_ID}`, {
-    ...data,
-    userId: USER_ID,
-  });
+export const addTodo = (data: Partial<Todo>) => {
+  return client.post<Todo>(`/todos?userId=${USER_ID}`, data);
 };
 
 export const deleteTodo = (todoId: number) => {

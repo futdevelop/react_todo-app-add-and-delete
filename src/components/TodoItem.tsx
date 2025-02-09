@@ -24,6 +24,7 @@ const TodoItem: React.FC<Props> = ({
           className="todo__status"
           defaultChecked={todo.completed}
         />
+        <span className="visually-hidden">Mark as completed</span>
       </label>
 
       <span data-cy="TodoTitle" className="todo__title">
