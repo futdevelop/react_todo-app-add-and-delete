@@ -10,7 +10,7 @@ enum ErrorMessages {
   UnableToLoad = 'Unable to load todos',
   EmptyTitle = 'Title should not be empty',
   UnadleToAdd = 'Unable to add a todo',
-  UnableToDelete = 'Unable to delete a todo'
+  UnableToDelete = 'Unable to delete a todo',
 }
 
 export enum Filters {
@@ -115,8 +115,6 @@ export const App: React.FC = () => {
 
   const handleDeleteTodo = (todoId: number) => {
     setProcessings((prevProcessings: number[]) => [...prevProcessings, todoId]);
-
-    console.log(todoId, 'deletedId')
 
     deleteTodo(todoId)
       .then(() => {
