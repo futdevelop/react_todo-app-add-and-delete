@@ -1,4 +1,4 @@
-// eslint-disable-next-line react/display-name
+/* eslint-disable react/display-name */
 
 import classNames from 'classnames';
 import React from 'react';
