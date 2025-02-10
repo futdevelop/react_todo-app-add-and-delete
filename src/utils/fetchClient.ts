@@ -17,6 +17,10 @@ function request<T>(
 ): Promise<T> {
   const options: RequestInit = { method };
 
+  if (data?.title.length === 0) {
+    throw new Error();
+  }
+
   if (data) {
     options.body = JSON.stringify(data);
     options.headers = {

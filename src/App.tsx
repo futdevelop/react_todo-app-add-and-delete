@@ -16,7 +16,7 @@ enum ErrorMessages {
 export enum Filters {
   All = 'all',
   Active = 'active',
-  Completed = 'completed',
+  Completed = 'completed'
 }
 
 export const App: React.FC = () => {
@@ -83,7 +83,7 @@ export const App: React.FC = () => {
 
     setDisabledTitle(true);
 
-    if (!title) {
+    if (!title || title.trim() === '') {
       setTitle(prevTitle => prevTitle.trim());
       handleError(ErrorMessages.EmptyTitle);
       setTimeout(() => inputRef.current?.focus(), 0);
