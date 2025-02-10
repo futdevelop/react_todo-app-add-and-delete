@@ -16,7 +16,7 @@ enum ErrorMessages {
 export enum Filters {
   All = 'all',
   Active = 'active',
-  Completed = 'completed'
+  Completed = 'completed',
 }
 
 export const App: React.FC = () => {
@@ -77,13 +77,14 @@ export const App: React.FC = () => {
   const deleteErrorMessage = () => setErrorMessage('');
 
   const itemsLeft = todos.length - completedTodos.length;
+  
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     setDisabledTitle(true);
 
-    if (!title || title.trim() === '') {
+    if (!title.trim()) {
       setTitle(prevTitle => prevTitle.trim());
       handleError(ErrorMessages.EmptyTitle);
       setTimeout(() => inputRef.current?.focus(), 0);
